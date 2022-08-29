@@ -108,7 +108,6 @@ impl Api {
         Ok(log)
     }
 
-
     // #####
     // ##### Sync
     // #####
@@ -174,14 +173,14 @@ impl Api {
     pub async fn get_torrent_list(&self) -> Result<Vec<Torrent>, error::Error> {
         let addr = push_own! {self.address, "/api/v2/torrents/info"};
 
-        let res = self
+        let response = self
             .client
             .get(&addr)
             .headers(self.make_headers()?)
             .send()
-            .await?
-            .bytes()
             .await?;
+
+        let res = response.bytes().await?;
 
         let all_torrents: Vec<Torrent> = serde_json::from_slice(&res)?;
 

@@ -74,7 +74,8 @@ pub struct Torrent {
     auto_tmm: bool,
     category: String,
     completed: i64,
-    completion_on: u32,
+    // FIXME: previously u32 but value was -3600
+    completion_on: i32,
     dl_limit: i64,
     dlspeed: i64,
     downloaded: i64,
@@ -338,11 +339,11 @@ pub struct TransferInfo {
 /// ```
 #[derive(Debug, Deserialize)]
 pub enum ConnectionStatus {
-    #[serde(rename="connected")]
+    #[serde(rename = "connected")]
     Connected,
-    #[serde(rename="firewalled")]
+    #[serde(rename = "firewalled")]
     Firewalled,
-    #[serde(rename="disconnected")]
+    #[serde(rename = "disconnected")]
     Disconnected,
 }
 
@@ -382,7 +383,7 @@ impl<'a> TorrentInfoSerde {
     }
 }
 
-/// Data on what the current download speeds and throttles are 
+/// Data on what the current download speeds and throttles are
 // dl_info_speed 	integer 	Global download rate (bytes/s)
 // dl_info_data 	integer 	Data downloaded this session (bytes)
 // up_info_speed 	integer 	Global upload rate (bytes/s)
@@ -407,7 +408,7 @@ pub struct GlobalTransferInfo {
     up_rate_limit: i64,
     /// DHT nodes connected to
     dht_nodes: i64,
-    connection_status: ConnectionStatus
+    connection_status: ConnectionStatus,
 }
 
 /// Whether or not alternat speed limits are enabled
@@ -415,8 +416,8 @@ pub struct GlobalTransferInfo {
 pub enum AlternateLimits {
     /// Alternative limits are in effect
     Enabled,
-    /// Run at full speed 
-    Disabled
+    /// Run at full speed
+    Disabled,
 }
 
 #[derive(Debug, Serialize, Getters)]
