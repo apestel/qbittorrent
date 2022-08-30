@@ -67,7 +67,7 @@ pub struct MainData {
 /// upspeed 	integer 	Torrent upload speed (bytes/s)
 /// ```
 
-#[derive(Debug, Deserialize, Getters, Clone)]
+#[derive(Debug, Deserialize, Serialize, Getters, Clone)]
 pub struct Torrent {
     added_on: u32,
     amount_left: u64,
